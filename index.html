@@ -349,12 +349,12 @@ function renderPlat(app){
   if(PM==='cards'){grid=document.createElement('div');grid.className='ygrid';app.appendChild(grid);}
   years.forEach(function(y){
     var L=byY[y]||[];
-    var head='<h3>'+esc(y)+' <span class="yc"><span class="yg">'+L.length+'작품 · '+(byYP[y]||0)+'편</span>'+pcounts(L)+'</span></h3>';
+    var head='<h3>'+esc(y)+' <span class="yc"><span class="yg">'+L.length+'작품('+(byYP[y]||0)+'편)</span>'+pcounts(L)+'</span></h3>';
     var sec=document.createElement(PM==='cards'?'div':'section');sec.id='yr-'+y;
     if(PM==='cards'){
       sec.className='ycard';
       var E=(byE[y]||[]).slice().sort(function(a,b){return a.d.replace(/\?/g,'9').localeCompare(b.d.replace(/\?/g,'9'))||a.w.p.localeCompare(b.w.p);});var nn=E.filter(function(e){return e.nw;});
-      var pp=byYPP[y]||{};sec.innerHTML='<h3><span class="yy">'+esc(y)+'</span><span class="yc"><span class="yg">신작 '+nn.length+'작품 · '+(byYP[y]||0)+'편</span>'+(PF==='E'?[]:PLATS).map(function(p){var n=nn.filter(function(e){return e.w.p===p.k&&NOENT(e.w,p.k);}).length,m=pp[p.k]||0;return (n||m)?'<span class="yg"><span class="pa '+p.k+'">'+p.k+'</span>'+n+'('+m+')</span>':'';}).join('')+'</span></h3>'+E.map(function(e){var w=e.w;var tip=w.title+' — '+e.k+'\n'+e.d+' · '+G(w)+(w.author?'\n'+w.author:'');
+      var pp=byYPP[y]||{};sec.innerHTML='<h3><span class="yy">'+esc(y)+'</span><span class="yc"><span class="yg">신작 '+nn.length+'작품('+(byYP[y]||0)+'편)</span>'+(PF==='E'?'':'<span class="yg ycl">작품 수(편수)</span>')+(PF==='E'?[]:PLATS).map(function(p){var n=nn.filter(function(e){return e.w.p===p.k&&NOENT(e.w,p.k);}).length,m=pp[p.k]||0;return (n||m)?'<span class="yg"><span class="pa '+p.k+'">'+p.k+'</span>'+n+'('+m+')</span>':'';}).join('')+'</span></h3>'+E.map(function(e){var w=e.w;var tip=w.title+' — '+e.k+'\n'+e.d+' · '+G(w)+(w.author?'\n'+w.author:'');
         return '<div class="yl'+(OFF(w)?' off':'')+'" title="'+esc(tip+(OFF(w)?'\n(스트리밍 종료)':''))+'"><span class="pa '+w.p+'" title="'+esc(w.prod||PNAME[w.p]||'')+'">'+w.p+'</span><span class="cd">'+esc(e.d?e.d.slice(5).replace('.','/'):'')+'</span><span class="ctt'+(e.nw?' nw':'')+'">'+esc(w.title)+' <i>'+esc(e.k)+'</i></span><span class="sis">'+sti(w)+'</span></div>';}).join('');
       grid.appendChild(sec);
     }else{
